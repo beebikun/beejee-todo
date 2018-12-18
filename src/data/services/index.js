@@ -20,6 +20,14 @@ class Api {
         status: 0,
         image_path: 'https://goo.gl/TDDqFT',
       },
+      {
+        id: Math.round(Math.random() * 10),
+        username: 'Star',
+        email: 'star.butterfly@mewni.com',
+        text: 'Fight with the evil forces',
+        status: 10,
+        image_path: 'https://goo.gl/bGcFdD',
+      },
     ];
     const total = 10;
     const pagesCount = Math.ceil(total / perPage);

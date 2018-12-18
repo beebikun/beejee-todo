@@ -21,7 +21,7 @@ const Task = ({ id, username, email, text, status, image_path }) => (
       { status }
     </td>
     <td className='Task__img'>
-      <img src={ image_path } />
+      <img src={ image_path } alt="img" />
     </td>
   </tr>
 );

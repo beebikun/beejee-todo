@@ -1,5 +1,4 @@
 import { ActionsObservable } from 'redux-observable';
-import configureStore from 'redux-mock-store';
 import { actions } from 'data/actions/task';
 import * as epics from './epics';
 

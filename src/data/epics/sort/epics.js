@@ -2,11 +2,8 @@ import { ofType, ActionsObservable } from 'redux-observable';
 
 import { switchMap } from 'rxjs/operators';
 
-import { actions, CONSTANTS } from 'data/actions/sort';
-import {
-  actions as taskActions,
-  CONSTANTS as TASKS_CONSTANTS,
-} from 'data/actions/task';
+import { CONSTANTS } from 'data/actions/sort';
+import { actions as taskActions } from 'data/actions/task';
 
 
 export function setSortingFlow(action$) {

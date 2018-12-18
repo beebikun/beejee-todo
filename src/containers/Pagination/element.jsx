@@ -18,7 +18,7 @@ class Pagination extends React.Component {
     const onNext = current < max ? handleNext : undefined;
 
     return (
-      <div className="pure-button-group"
+      <div className="pure-button-group Pagination"
            role="group"
            aria-label="paginations">
         <PaginationButton symbol="⇐" onClick={ onPrev } />

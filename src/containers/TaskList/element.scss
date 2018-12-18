@@ -1,0 +1,15 @@
+.TaskList {
+	th {
+	    white-space: nowrap;
+	    vertical-align: baseline;
+
+	    button {
+	    	margin-left: 10px;
+	    	width: 45px;
+
+	    	&:not(.pure-button-primary) {
+		    	background: aliceblue;
+	    	}
+	    }
+	}
+}

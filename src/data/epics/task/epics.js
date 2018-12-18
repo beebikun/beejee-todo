@@ -1,7 +1,7 @@
 import { ofType } from 'redux-observable';
 
-import { from, of, pipe } from 'rxjs';
-import { switchMap, mergeMap, mergeAll, map, catchError } from 'rxjs/operators';
+import { of, pipe } from 'rxjs';
+import { switchMap, catchError } from 'rxjs/operators';
 
 import { actions, CONSTANTS } from 'data/actions/task';
 import { getFetchingParams } from 'data/reducers';

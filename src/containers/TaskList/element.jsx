@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './element.scss';
 
 import Task from 'components/Task';
 import SortingButton from 'containers/SortingButton';
 
 const TaskList = ({ tasks }) => (
-  <table className="pure-table">
+  <table className="pure-table TaskList">
     <thead>
         <tr>
             <th>
