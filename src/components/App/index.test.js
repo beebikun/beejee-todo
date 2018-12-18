@@ -9,4 +9,6 @@ it('render without crashing', () => {
     .toBe(true);
   expect(wrapper.find('#Pagination').exists())
     .toBe(true);
+  expect(wrapper.find('#TaskAdd').exists())
+    .toBe(true);
 });

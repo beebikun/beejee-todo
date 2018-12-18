@@ -1,34 +1,35 @@
 import { CONSTANTS, actions } from './index';
 
 
-function expectAsync({asyncAction, constants, payloads, contexts}) {
-  payloads.ERROR = contexts.ERROR = Error('You\'ve been a bad boy.');
+function expectAsync({name, cname, payloads}) {
+  const asyncAction = actions[name];
+  const constants = CONSTANTS[cname];
+
+  payloads.ERROR = Error('You\'ve been a bad boy.');
 
   it.each`
-    name | constantName
+    name           | constantName
     ${ 'request' } | ${'REQUEST'}
     ${ 'success' } | ${'SUCCESS'}
     ${ 'failure' } | ${'ERROR'}
   `('$name', ({ name, constantName }) => {
     const payload = payloads[constantName];
-    const context = contexts[constantName];
     const type = constants[constantName];
 
-    const result = asyncAction[name](context);
+    const result = asyncAction[name](payload);
     expect(result).toEqual({
       payload, type,
     });
   });
 };
 
+const rowTask = { username: 'u', text: 't', email: 'email@e.com', image: 'i' };
+const task = { ...rowTask, id: 1 };
 const tasks = [ { id: 1 }, { id: 2 } ];
 
+describe.each`
+  name            | cname      | payloads
+  ${'fetchItems'} | ${'FETCH'} | ${ { SUCCESS: { tasks } } }
+  ${'addItem'}    | ${'ADD'}   | ${ { REQUEST: rowTask, SUCCESS: task } }
+`('$name', expectAsync);
 
-describe('fetch', () => {
-  expectAsync({
-    asyncAction: actions.fetchItems,
-    constants: CONSTANTS.FETCH,
-    contexts: { SUCCESS: { tasks } },
-    payloads: { SUCCESS: { tasks } },
-  });
-});

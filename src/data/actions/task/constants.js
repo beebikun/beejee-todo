@@ -14,9 +14,9 @@ export default {
     REQUEST: 'task/edit/request',
     SUCCESS: 'task/edit/success',
   },
-  CREATE: {
-    ERROR: 'task/create/error',
-    REQUEST: 'task/create/request',
-    SUCCESS: 'task/create/success',
+  ADD: {
+    ERROR: 'task/add/error',
+    REQUEST: 'task/add/request',
+    SUCCESS: 'task/add/success',
   },
 };

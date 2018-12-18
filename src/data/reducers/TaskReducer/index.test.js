@@ -8,6 +8,15 @@ it('initial state', () => {
     .toEqual([]);
 });
 
+it('Unknown. type: return old state', () => {
+  const prev = [ {id: 1} ];
+  const payload = [ {id: 3} ];
+  const next = reducer(prev, { type: 'UNKNOWN', payload });
+
+  expect(next)
+    .toEqual(prev);
+});
+
 it('CONSTANTS.FETCH.SUCCESS: replace list', () => {
   const prev = [ {id: 1} ];
   const payload = { tasks: [ {id: 3} ] };
@@ -17,12 +26,12 @@ it('CONSTANTS.FETCH.SUCCESS: replace list', () => {
     .toEqual(payload.tasks);
 });
 
-
-it('Unknown. type: return old state', () => {
-  const prev = [ {id: 1} ];
-  const payload = [ {id: 3} ];
-  const next = reducer(prev, { type: 'UNKNOWN', payload });
+it('CONSTANTS.ADD.SUCCESS: add item to the start', () => {
+  const prev = [ { id: 1 }, { id: 2 }, { id: 3 }, ];
+  const payload = { id: 4 };
+  const next = reducer(prev, { type: CONSTANTS.ADD.SUCCESS, payload });
 
   expect(next)
-    .toEqual(prev);
+    .toEqual([payload, ...prev]);
 });
+

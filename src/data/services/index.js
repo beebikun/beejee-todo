@@ -37,7 +37,7 @@ class Api {
     });
   }
 
-  createItem({ username, email, text, image }) {
+  addItem({ username, email, text, image }) {
     return Promise.resolve({
       id: 3,
       username,

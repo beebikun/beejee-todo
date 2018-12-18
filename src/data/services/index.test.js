@@ -15,14 +15,14 @@ it('fetch items', async (done) => {
   done();
 });
 
-it('create item', async (done) => {
+it('add item', async (done) => {
   const item = {
     username: 'username',
     email: 'email',
     text: 'text',
     image: 'image',
   };
-  const result = await api.createItem(item);
+  const result = await api.addItem(item);
 
   const expected = {
     ...item,
