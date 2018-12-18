@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Task from 'components/Task';
 
 const SortingButton = ({ onSort, isActive, direction }) => (
   <button className={ `pure-button ${ isActive ? 'pure-button-primary' : ''}` }

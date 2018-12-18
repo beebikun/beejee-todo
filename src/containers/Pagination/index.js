@@ -1,4 +1,3 @@
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from 'data/actions/page';
 import Paginations from './element';

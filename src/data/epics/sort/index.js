@@ -1,7 +1,6 @@
 import { combineEpics } from 'redux-observable';
-import { getCurrentPageFlow, setMaxPageFlow } from './epics';
+import { setSortingFlow } from './epics';
 
 export default combineEpics(
-  getCurrentPageFlow,
-  setMaxPageFlow,
+  setSortingFlow,
 );

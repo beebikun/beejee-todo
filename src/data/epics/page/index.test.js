@@ -5,10 +5,10 @@ import * as epics from './epics';
 
 const pageNumber = 10;
 
-it('getCurrentPageFlow', async (done) => {
+it('setCurrentPageFlow', async (done) => {
   const prevAction = actions.setCurrent(pageNumber);
   const action$ = ActionsObservable.of(prevAction);
-  const output$ = epics.getCurrentPageFlow(action$);
+  const output$ = epics.setCurrentPageFlow(action$);
 
   const expectedAction = taskActions.fetchItems.request();
   const result = await output$.toPromise();

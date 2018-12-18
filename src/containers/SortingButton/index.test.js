@@ -33,39 +33,39 @@ function getMapped(state, dispatch, ownProps) {
   return mergeProps(stateProps, dispatchProps, ownProps);
 }
 
-it('Key doesnt match >> by => key, direction => asc', () => {
-  const key = 'field';
+it('Key doesnt match >> by => sortKey, direction => asc', () => {
+  const sortKey = 'field';
   const dispatch = jest.fn();
   const state = { sort: { by: 'other', direction: 'desc' }, };
-  const props = getMapped(state, dispatch, { key });
+  const props = getMapped(state, dispatch, { sortKey });
 
   expect(props)
     .toEqual({ isActive: false, direction: '', onSort: expect.any(Function) });
 
   props.onSort();
   expect(dispatch)
-    .toBeCalledWith(actions.set({ by: key, direction: 'asc' }));
+    .toBeCalledWith(actions.set({ by: sortKey, direction: 'asc' }));
 });
 
-it('Key match &&  direction === asc >> by == key, direction: desc', () => {
-  const key = 'field';
+it('Key match &&  direction === asc >> by == sortKey, direction: desc', () => {
+  const sortKey = 'field';
   const dispatch = jest.fn();
-  const state = { sort: { by: key, direction: 'asc' }, };
-  const props = getMapped(state, dispatch, { key });
+  const state = { sort: { by: sortKey, direction: 'asc' }, };
+  const props = getMapped(state, dispatch, { sortKey });
 
   expect(props)
     .toEqual({ isActive: true, direction: 'asc', onSort: expect.any(Function) });
 
   props.onSort();
   expect(dispatch)
-    .toBeCalledWith(actions.set({ by: key, direction: 'desc' }));
+    .toBeCalledWith(actions.set({ by: sortKey, direction: 'desc' }));
 });
 
 it('Key match &&  direction === desc >> by == null, direction: null', () => {
-  const key = 'field';
+  const sortKey = 'field';
   const dispatch = jest.fn();
-  const state = { sort: { by: key, direction: 'desc' }, };
-  const props = getMapped(state, dispatch, { key });
+  const state = { sort: { by: sortKey, direction: 'desc' }, };
+  const props = getMapped(state, dispatch, { sortKey });
 
   expect(props)
     .toEqual({ isActive: true, direction: 'desc', onSort: expect.any(Function) });

@@ -17,48 +17,89 @@ async function getWrapper() {
   return wrapper.update();
 }
 
-it('Initial state: fetch items afetr page onload', async (done) => {
-  await getWrapper();
-  const state = store.getState();
-  const expectedTask = {
-    id: expect.any(Number),
-    username: expect.any(String),
-    email: expect.any(String),
-    text: expect.any(String),
-    status: expect.any(Number),
-    image_path: expect.any(String),
-  };
-  const expectedState = {
-    tasks: expect.arrayContaining([expectedTask]),
-    page: expect.objectContaining({
-      current: 0,
-      max: expect.any(Number),
-    }),
-  };
-  expect(state)
-    .toMatchObject(expectedState);
+describe.skip('e2e', () => {
 
-  done();
-});
+  it('Initial state: fetch items afetr page onload', async (done) => {
+    await getWrapper();
+    const state = store.getState();
+    const expectedTask = {
+      id: expect.any(Number),
+      username: expect.any(String),
+      email: expect.any(String),
+      text: expect.any(String),
+      status: expect.any(Number),
+      image_path: expect.any(String),
+    };
+    const expectedState = {
+      tasks: expect.arrayContaining([expectedTask]),
+      page: expect.objectContaining({
+        current: 0,
+        max: expect.any(Number),
+      }),
+    };
+    expect(state)
+      .toMatchObject(expectedState);
 
-it.only('Change page', async (done) => {
-  const wrapper = await getWrapper();
-  const nextButton = wrapper.find('PaginationButton').last();
-  const prevState = store.getState();
+    done();
+  });
 
-  nextButton.simulate('click');
+  it('Change page', async (done) => {
+    const wrapper = await getWrapper();
+    const nextButton = wrapper.find('PaginationButton').last();
+    const prevState = store.getState();
 
-  await skipTick();
+    nextButton.simulate('click');
 
-  const state = store.getState();
-  expect(state.page.current)
-    .toEqual(prevState.page.current + 1);
-  expect(state.page.max)
-    .toEqual(prevState.page.max);
+    await skipTick();
 
-  expect(state.tasks)
-    .not
-    .toEqual(prevState.tasks);
+    const state = store.getState();
 
-  done();
+    expect(state.page.current)
+      .toEqual(prevState.page.current + 1);
+    expect(state.page.max)
+      .toEqual(prevState.page.max);
+
+    expect(state.tasks)
+      .not
+      .toEqual(prevState.tasks);
+
+    expect(state.sorting)
+      .toEqual(prevState.sorting);
+
+    done();
+  });
+
+
+  it('Change sorting', async (done) => {
+    const wrapper = await getWrapper();
+    const headerTh = wrapper.find('th').at(1);
+    expect(headerTh.text())
+      .toEqual('Username-');
+    const sortButton = headerTh.find('SortingButton').at(0);
+    const prevState = store.getState();
+    expect(prevState.sort)
+      .toEqual({ by: null, direction: null });
+
+    sortButton.simulate('click');
+
+    await skipTick();
+
+    const state = store.getState();
+    expect(state.sort)
+      .toEqual({ by: 'username', direction: 'asc' });
+
+    expect(state.page)
+      .toEqual(prevState.page);
+
+    expect(state.tasks)
+      .not
+      .toEqual(prevState.tasks);
+
+    wrapper.update();
+    expect(headerTh.text())
+      .toEqual('Username↑');
+
+    done();
+  });
+
 });

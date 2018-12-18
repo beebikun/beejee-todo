@@ -1,10 +1,14 @@
+import React from 'react';
+
 import * as reactRedux from 'react-redux';
 const mockConnect = jest.spyOn(reactRedux, 'connect');
 mockConnect.mockReturnValue(() => jest.fn());
 
+jest.mock('./element', () => (<div></div>));
+
 it('Injected props', () => {
   const Connected = require('./index').default;
-  expect(mockConnect).toBeCalled();
+  expect(mockConnect).toBeCalledTimes(1);
   const [mapStateToProps, mapDispatchToProps] = mockConnect.mock.calls[0];
 
   expect(mapStateToProps)

@@ -2,16 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Task from 'components/Task';
+import SortingButton from 'containers/SortingButton';
 
 const TaskList = ({ tasks }) => (
   <table className="pure-table">
     <thead>
         <tr>
-            <th>#</th>
-            <th>Username</th>
-            <th>Email</th>
+            <th>
+              #
+              <SortingButton sortKey="id" className="SortingButton" />
+            </th>
+            <th>
+              Username
+              <SortingButton sortKey="username" className="SortingButton" />
+            </th>
+            <th>
+              Email
+              <SortingButton sortKey="email" className="SortingButton" />
+            </th>
             <th>Text</th>
-            <th>Status</th>
+            <th>
+              Status
+              <SortingButton sortKey="status" className="SortingButton" />
+            </th>
             <th></th>
         </tr>
     </thead>
