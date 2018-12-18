@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Todo from 'components/Todo';
+import Task from 'components/Task';
 
-const TodoList = ({ todos }) => (
+const TaskList = ({ tasks }) => (
   <table className="pure-table">
     <thead>
         <tr>
@@ -17,13 +17,13 @@ const TodoList = ({ todos }) => (
     </thead>
 
     <tbody>
-      { todos.map((todo, idx) => ( <Todo key={idx} { ...todo } /> )) }
+      { tasks.map((task, idx) => ( <Task key={idx} { ...task } /> )) }
     </tbody>
   </table>
 );
 
-TodoList.propTypes = {
-  todos: PropTypes.arrayOf(
+TaskList.propTypes = {
+  tasks: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       username: PropTypes.string.isRequired,
@@ -35,4 +35,4 @@ TodoList.propTypes = {
   ).isRequired
 }
 
-export default TodoList;
+export default TaskList;

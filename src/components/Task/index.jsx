@@ -3,30 +3,30 @@ import PropTypes from 'prop-types';
 import './index.scss';
 
 
-const Todo = ({ id, username, email, text, status, image_path }) => (
-  <tr className='Todo'>
-    <td className='Todo__id'>
+const Task = ({ id, username, email, text, status, image_path }) => (
+  <tr className='Task'>
+    <td className='Task__id'>
       { id }
     </td>
-    <td className='Todo__username'>
+    <td className='Task__username'>
       { username }
     </td>
-    <td className='Todo__email'>
+    <td className='Task__email'>
       { email }
     </td>
-    <td className='Todo__text'>
+    <td className='Task__text'>
       { text }
     </td>
-    <td className='Todo__status'>
+    <td className='Task__status'>
       { status }
     </td>
-    <td className='Todo__img'>
+    <td className='Task__img'>
       <img src={ image_path } />
     </td>
   </tr>
 );
 
-Todo.propTypes = {
+Task.propTypes = {
   id: PropTypes.number.isRequired,
   username: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
@@ -35,4 +35,4 @@ Todo.propTypes = {
   image_path: PropTypes.string.isRequired,
 }
 
-export default Todo;
+export default Task;

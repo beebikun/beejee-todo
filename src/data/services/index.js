@@ -1,8 +1,11 @@
+const perPage = 3;
+const BASE_URL = '';
+
 class Api {
   fetchItems({ page, sortField, sortDirection }) {
-    return [
+    const tasks = [
       {
-        id: 1,
+        id: Math.round(Math.random() * 10),
         username: 'Finn',
         email: 'finn.humat@at.com',
         text: 'Save the princess',
@@ -10,7 +13,7 @@ class Api {
         image_path: 'https://goo.gl/61pq8a',
       },
       {
-        id: 2,
+        id: Math.round(Math.random() * 10),
         username: 'Dipper',
         email: 'dipper.pines@gf.com',
         text: 'Solve the secret',
@@ -18,6 +21,36 @@ class Api {
         image_path: 'https://goo.gl/TDDqFT',
       },
     ];
+    const total = 10;
+    const pagesCount = Math.ceil(total / perPage);
+
+    return Promise.resolve({
+      tasks, total, pagesCount,
+    });
+  }
+
+  createItem({ username, email, text, image }) {
+    return Promise.resolve({
+      id: 3,
+      username,
+      email,
+      text,
+      status: 0,
+      image_path: 'https://goo.gl/VYdz95',
+    });
+  }
+
+  editItem(id, { text, status }) {
+    return Promise.resolve({});
+  }
+
+
+  login({username, password}) {
+    if (username === 'admin' && password === '123') {
+      return Promise.resolve(true);
+    }
+
+    return Promise.resolve(false);
   }
 }
 

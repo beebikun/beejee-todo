@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import TodoList from './element';
+import TaskList from './element';
 
 it('render without crashing', () => {
-  const todos = [
+  const tasks = [
     {
       id: 1,
       username: 'Finn',
@@ -22,13 +22,13 @@ it('render without crashing', () => {
       image_path: 'awesome_img_src',
     },
   ];
-  const wrapper = shallow(<TodoList todos={ todos } />);
-  const items = wrapper.find('Todo');
+  const wrapper = shallow(<TaskList tasks={ tasks } />);
+  const items = wrapper.find('Task');
   expect(items)
-    .toHaveLength(todos.length);
-  todos.forEach((todo, idx) => {
+    .toHaveLength(tasks.length);
+  tasks.forEach((task, idx) => {
     const item = items.at(idx);
     expect(item.props())
-      .toEqual(todo);
+      .toEqual(task);
   });
 });

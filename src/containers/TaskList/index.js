@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
 
-import TodoList from './element';
+import TaskList from './element';
 
 
 function mapStateToProps(state) {
   return {
-    todos: state.todos,
+    tasks: state.tasks,
   };
 }
 
 
 const connector = connect(mapStateToProps);
-export default connector(TodoList);
+export default connector(TaskList);

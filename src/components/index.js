@@ -1,11 +1,13 @@
 import React from 'react';
-import TodoList from 'containers/TodoList';
+import { Provider } from 'react-redux';
+import App from 'components/App';
+import store from 'data/storage';
 
 
-const App = () => (
-  <div>
-    <TodoList id="TodoList" />
-  </div>
+const Root = () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
 );
 
-export default App;
+export default Root;

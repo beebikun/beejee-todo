@@ -1,32 +1,42 @@
 import { ActionsObservable } from 'redux-observable';
-import { actions } from 'data/actions/todo';
+import configureStore from 'redux-mock-store';
+import { actions } from 'data/actions/task';
 import * as epics from './epics';
 
-const todos = [ {id: 1}, {id: 2}, ];
-jest.mock('data/reducers');
 
+const tasks = [ {id: 1}, {id: 2}, ];
+const total = 10;
+const pagesCount = 20;
+const STORE = { value : {} };
+
+jest.mock('data/reducers');
 const { getFetchingParams } = require('data/reducers');
 const fetchParams = { page: 10 };
 getFetchingParams.mockReturnValue(fetchParams);
 
-const STORE = { getState: jest.fn() };
+
 
 describe('fetchItemsFlow', () => {
   const request = actions.fetchItems.request();
 
-  it('success', () => {
-    const expectedAction = actions.fetchItems.success(todos);
-    const apiResponse = Promise.resolve(todos);
+  it('success', async (done) => {
+    const result = { tasks, total, pagesCount };
+    const expectedAction = actions.fetchItems.success(result);
+    const apiResponse = Promise.resolve(result);
 
-    expectFetch(expectedAction, apiResponse);
+    await expectFetch(expectedAction, apiResponse);
+
+    done();
   });
 
-  it('failure', () => {
+  it('failure', async (done) => {
     const error = Error('Failure reason');
     const expectedAction = actions.fetchItems.failure(error);
     const apiResponse = Promise.reject(error);
 
-    expectFetch(expectedAction, apiResponse);
+    await expectFetch(expectedAction, apiResponse);
+
+    done();
   });
 
 
@@ -34,7 +44,7 @@ describe('fetchItemsFlow', () => {
     const API = {
       fetchItems: jest.fn(() => apiResponse),
     };
-
+    getFetchingParams.mockClear();
     const action$ = ActionsObservable.of(request);
     const output$ = epics.fetchItemsFlow(action$, STORE, API);
 

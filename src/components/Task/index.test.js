@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import Todo from './index';
+import Task from './index';
 
 
 it('render without crashing', () => {
@@ -13,7 +13,7 @@ it('render without crashing', () => {
     status: 10,
     image_path: 'awesome_img_src',
   };
-  const wrapper = shallow(<Todo {...props} />);
+  const wrapper = shallow(<Task {...props} />);
 
   const expectedItems = [
     'id', 'username', 'email', 'text', 'status', 'image_path',

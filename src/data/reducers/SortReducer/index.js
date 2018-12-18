@@ -1,3 +1,9 @@
-export default function SortReducer() {
-  return null;
+
+const initialState = {
+  by: null,
+  direction: null,
+};
+
+export default function SortReducer(state=initialState, action) {
+  return state;
 }

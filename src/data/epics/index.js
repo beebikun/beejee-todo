@@ -1,5 +1,6 @@
 import { combineEpics } from 'redux-observable';
 
-import todoEpics from './todo';
+import taskEpics from './task';
+import pageEpics from './page';
 
-export default combineEpics(todoEpics);
+export default combineEpics(taskEpics, pageEpics);

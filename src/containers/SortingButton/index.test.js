@@ -1,0 +1,76 @@
+import { actions } from 'data/actions/sort';
+
+import * as reactRedux from 'react-redux';
+const mockConnect = jest.spyOn(reactRedux, 'connect');
+mockConnect.mockReturnValue(() => jest.fn());
+// sorting order null -> 'asc' -> 'desc'
+
+function getMapped(state, dispatch, ownProps) {
+  const Connected = require('./index').default;
+  expect(mockConnect).toBeCalled();
+
+  const [
+    mapStateToProps,
+    mapDispatchToProps,
+    mergeProps,
+  ] = mockConnect.mock.calls[0];
+
+  expect(mapStateToProps)
+    .toBeInstanceOf(Function);
+  expect(mapDispatchToProps)
+    .toBeInstanceOf(Function);
+  expect(mergeProps)
+    .toBeInstanceOf(Function);
+
+  const stateProps = mapStateToProps(state);
+  expect(stateProps)
+    .toEqual(state.sort);
+
+  const dispatchProps = mapDispatchToProps(dispatch);
+  expect(dispatchProps)
+    .toEqual({ onSort: expect.any(Function) });
+
+  return mergeProps(stateProps, dispatchProps, ownProps);
+}
+
+it('Key doesnt match >> by => key, direction => asc', () => {
+  const key = 'field';
+  const dispatch = jest.fn();
+  const state = { sort: { by: 'other', direction: 'desc' }, };
+  const props = getMapped(state, dispatch, { key });
+
+  expect(props)
+    .toEqual({ isActive: false, direction: '', onSort: expect.any(Function) });
+
+  props.onSort();
+  expect(dispatch)
+    .toBeCalledWith(actions.set({ by: key, direction: 'asc' }));
+});
+
+it('Key match &&  direction === asc >> by == key, direction: desc', () => {
+  const key = 'field';
+  const dispatch = jest.fn();
+  const state = { sort: { by: key, direction: 'asc' }, };
+  const props = getMapped(state, dispatch, { key });
+
+  expect(props)
+    .toEqual({ isActive: true, direction: 'asc', onSort: expect.any(Function) });
+
+  props.onSort();
+  expect(dispatch)
+    .toBeCalledWith(actions.set({ by: key, direction: 'desc' }));
+});
+
+it('Key match &&  direction === desc >> by == null, direction: null', () => {
+  const key = 'field';
+  const dispatch = jest.fn();
+  const state = { sort: { by: key, direction: 'desc' }, };
+  const props = getMapped(state, dispatch, { key });
+
+  expect(props)
+    .toEqual({ isActive: true, direction: 'desc', onSort: expect.any(Function) });
+
+  props.onSort();
+  expect(dispatch)
+    .toBeCalledWith(actions.set({ by: null, direction: null }));
+});
