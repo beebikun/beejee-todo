@@ -5,7 +5,7 @@ const FormErrorMessage = ({ errors }) => {
   if (!errors) return;
 
   return (
-    <div className="pure-control-group">
+    <div className="FormErrorMessage">
       { errors.map((msg, idx) => (
           <span className="pure-form-message" key={ idx }>
             { msg }

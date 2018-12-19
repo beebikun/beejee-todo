@@ -2,12 +2,10 @@ import reducer, { getFetchingParams } from './index';
 
 it('initial state', () => {
   const next = reducer(undefined, {});
-  expect(next)
-    .toEqual({
-      tasks: expect.anything(),
-      page: expect.anything(),
-      sort: expect.anything(),
-    });
+  expect(next).toHaveProperty('auth');
+  expect(next).toHaveProperty('tasks');
+  expect(next).toHaveProperty('page');
+  expect(next).toHaveProperty('sort');
 });
 
 

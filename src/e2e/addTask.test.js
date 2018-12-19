@@ -1,23 +1,14 @@
 import store from 'data/storage';
-import { getWrapper, skipTick } from './utils';
+import { getWrapper, fillForm } from './utils';
 
+const PREFIX = 'TaskAdd';
 const FIELDS = { username: 'username', email: 'email@ex.com', text: 'text', image: 'img.png' };
+
 it('add task', async (done) => {
   const wrapper = await getWrapper();
   const prevState = store.getState();
 
-  const form = wrapper.find('.TaskAdd form');
-  Object.keys(FIELDS).forEach(name => {
-    const input = form.find(`[name="${ name }"]`);
-    const eventKey = name === 'image' ? 'files' : 'value';
-    const value = name === 'image' ? [FIELDS[name]] : FIELDS[name];
-    input.simulate('change', { target: { [ eventKey ]: value, name } });
-  });
-
-  wrapper.update();
-  form.simulate('submit');
-
-  await skipTick();
+  await fillForm(wrapper, 'TaskAdd', FIELDS);
 
   const state = store.getState();
   expect(state.page)
