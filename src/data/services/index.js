@@ -3,9 +3,17 @@ const BASE_URL = '';
 
 class Api {
   fetchItems({ page, sortField, sortDirection }) {
+    const ids = [];
+    while(ids.length != 3) {
+      const id = Math.round(Math.random() * 100);
+      if (ids.includes(id) === false) {
+        ids.push(id);
+      }
+    }
+
     const tasks = [
       {
-        id: Math.round(Math.random() * 10),
+        id: ids[0],
         username: 'Finn',
         email: 'finn.humat@at.com',
         text: 'Save the princess',
@@ -13,7 +21,7 @@ class Api {
         image_path: 'https://goo.gl/61pq8a',
       },
       {
-        id: Math.round(Math.random() * 10),
+        id: ids[1],
         username: 'Dipper',
         email: 'dipper.pines@gf.com',
         text: 'Solve the secret',
@@ -21,7 +29,7 @@ class Api {
         image_path: 'https://goo.gl/TDDqFT',
       },
       {
-        id: Math.round(Math.random() * 10),
+        id: ids[2],
         username: 'Star',
         email: 'star.butterfly@mewni.com',
         text: 'Fight with the evil forces',
@@ -48,8 +56,9 @@ class Api {
     });
   }
 
-  editItem(id, { text, status }) {
-    return Promise.resolve({});
+  editItem(task) {
+    // const { id,  }
+    return Promise.resolve(task);
   }
 
 

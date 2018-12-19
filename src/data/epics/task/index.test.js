@@ -3,22 +3,44 @@ import { actions } from 'data/actions/task';
 import * as epics from './epics';
 
 const STORE = { value : {} };
+const reducers = require('data/reducers');
+const fetchParams = { page: 10 };
+const getFetchingParams = jest.spyOn(reducers, 'getFetchingParams');
+getFetchingParams.mockReturnValue(fetchParams);
+
+const tasks = [ {id: 1}, {id: 2}, ];
+const total = 10;
+const pagesCount = 20;
+const FETCH_ITEMS_PAYLOADS = {
+  success: { tasks, total, pagesCount },
+  api: fetchParams,
+};
+const rawTask = { username: 'u', text: 't', email: 'email@e.com', image: 'i' };
+const task = { ...rawTask, id: 1 };
+const ADD_ITEM_PAYLOADS = {
+  request: rawTask,
+  success: task,
+  api: rawTask,
+};
+const editedTask = { text: 'edited', status: 10 };
+const EDIT_ITEM_PAYLOADS = {
+  request: { id: task.id, ...editedTask },
+  success: {},
+  api: { id: task.id, ...editedTask },
+};
 
 
-describe('fetchItemsFlow', () => {
-  const reducers = require('data/reducers');
-  const fetchParams = { page: 10 };
-  const getFetchingParams = jest.spyOn(reducers, 'getFetchingParams');
-  getFetchingParams.mockReturnValue(fetchParams);
-
-  const tasks = [ {id: 1}, {id: 2}, ];
-  const total = 10;
-  const pagesCount = 20;
-  const asyncAction = actions.fetchItems;
-  const request = asyncAction.request();
+describe.each`
+  name                | actionName      | apiMethod       | payloads
+  ${'fetchItemsFlow'} | ${'fetchItems'} | ${'fetchItems'} | ${ FETCH_ITEMS_PAYLOADS }
+  ${'addItemFlow'}    | ${'addItem'}    | ${'addItem'}    | ${ ADD_ITEM_PAYLOADS }
+  ${'editItemFlow'}   | ${'editItem'}   | ${'editItem'}   | ${ EDIT_ITEM_PAYLOADS }
+`('$name', ({ name, actionName, apiMethod, payloads }) => {
+  const asyncAction = actions[actionName];
+  const request = asyncAction.request(payloads.request);
 
   it('success', async (done) => {
-    const result = { tasks, total, pagesCount };
+    const result = payloads.success;
     const expectedAction = asyncAction.success(result);
     const apiResponse = Promise.resolve(result);
 
@@ -37,68 +59,20 @@ describe('fetchItemsFlow', () => {
     done();
   });
 
-
   function expectFetch(expectedAction, apiResponse) {
     const API = {
-      fetchItems: jest.fn(() => apiResponse),
+      [apiMethod]: jest.fn(() => apiResponse),
     };
-    getFetchingParams.mockClear();
     const action$ = ActionsObservable.of(request);
-    const output$ = epics.fetchItemsFlow(action$, STORE, API);
+    const output$ = epics[name](action$, STORE, API);
 
     return output$.toPromise()
       .then((calledAction) => {
         expect(calledAction).toEqual(expectedAction);
 
-        expect(API.fetchItems).toHaveBeenCalledTimes(1);
-        expect(API.fetchItems).toHaveBeenCalledWith(fetchParams);
-
-        expect(getFetchingParams).toHaveBeenCalledTimes(1);
+        expect(API[apiMethod]).toHaveBeenCalledTimes(1);
+        expect(API[apiMethod]).toHaveBeenCalledWith(payloads.api);
       });
   }
 });
 
-
-describe('addItemFlow', () => {
-  const rawTask = { username: 'u', text: 't', email: 'email@e.com', image: 'i' };
-  const task = { ...rawTask, id: 1 };
-  const asyncAction = actions.addItem;
-  const request = asyncAction.request(rawTask);
-
-  it('success', async (done) => {
-    const result = task;
-    const expectedAction = asyncAction.success(result);
-    const apiResponse = Promise.resolve(result);
-
-    await expectFetch(expectedAction, apiResponse);
-
-    done();
-  });
-
-  it('failure', async (done) => {
-    const error = Error('Failure reason');
-    const expectedAction = asyncAction.failure(error);
-    const apiResponse = Promise.reject(error);
-
-    await expectFetch(expectedAction, apiResponse);
-
-    done();
-  });
-
-
-  function expectFetch(expectedAction, apiResponse) {
-    const API = {
-      addItem: jest.fn(() => apiResponse),
-    };
-    const action$ = ActionsObservable.of(request);
-    const output$ = epics.addItemFlow(action$, STORE, API);
-
-    return output$.toPromise()
-      .then((calledAction) => {
-        expect(calledAction).toEqual(expectedAction);
-
-        expect(API.addItem).toHaveBeenCalledTimes(1);
-        expect(API.addItem).toHaveBeenCalledWith(rawTask);
-      });
-  }
-});

@@ -3,36 +3,47 @@ import PropTypes from 'prop-types';
 import './index.scss';
 
 
-const Task = ({ id, username, email, text, status, image_path }) => (
-  <tr className='Task'>
+const Task = ({ task, buttonElement, statusElement, textElement, className }) => (
+  <tr className={`Task ${ className || '' }`}>
     <td className='Task__id'>
-      { id }
+      { task.id }
     </td>
     <td className='Task__username'>
-      { username }
+      { task.username }
     </td>
     <td className='Task__email'>
-      { email }
+      { task.email }
     </td>
     <td className='Task__text'>
-      { text }
+      { textElement ? textElement : task.text }
     </td>
     <td className='Task__status'>
-      { status }
+      { statusElement ? statusElement : task.status }
     </td>
     <td className='Task__img'>
-      <img src={ image_path } alt="img" />
+      <img src={ task.image_path } alt="img" />
     </td>
+    {
+      !buttonElement ? null :
+      <td className='Task__btn'>
+        { buttonElement }
+      </td>
+    }
   </tr>
 );
 
 Task.propTypes = {
-  id: PropTypes.number.isRequired,
-  username: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  status: PropTypes.number.isRequired,
-  image_path: PropTypes.string.isRequired,
-}
+  task: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    status: PropTypes.number.isRequired,
+    image_path: PropTypes.string.isRequired,
+  }),
+  buttonElement: PropTypes.element,
+  statusElement: PropTypes.element,
+  textElement: PropTypes.element,
+};
 
 export default Task;

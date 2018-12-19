@@ -24,6 +24,7 @@ function expectAsync({name, cname, payloads}) {
 };
 
 const rawTask = { username: 'u', text: 't', email: 'email@e.com', image: 'i' };
+const editedTask = { id: 1, text: 't', status: 10 };
 const task = { ...rawTask, id: 1 };
 const tasks = [ { id: 1 }, { id: 2 } ];
 
@@ -31,5 +32,6 @@ describe.each`
   name            | cname      | payloads
   ${'fetchItems'} | ${'FETCH'} | ${ { SUCCESS: { tasks } } }
   ${'addItem'}    | ${'ADD'}   | ${ { REQUEST: rawTask, SUCCESS: task } }
+  ${'editItem'}   | ${'EDIT'}  | ${ { REQUEST: editedTask, SUCCESS: task } }
 `('$name', expectAsync);
 

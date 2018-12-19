@@ -19,4 +19,5 @@ export default {
     REQUEST: 'task/add/request',
     SUCCESS: 'task/add/success',
   },
+  SET_EDIT: 'task/set_edit'
 };

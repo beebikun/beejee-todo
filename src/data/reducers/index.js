@@ -4,6 +4,7 @@ import AuthReducer from './AuthReducer';
 import TaskReducer from './TaskReducer';
 import PageReducer from './PageReducer';
 import SortReducer from './SortReducer';
+import EditTaskIdReducer from './EditTaskIdReducer';
 
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   tasks: TaskReducer,
   page: PageReducer,
   sort: SortReducer,
+  editTaskId: EditTaskIdReducer,
 });
 
 export default rootReducer;

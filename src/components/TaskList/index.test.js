@@ -39,13 +39,13 @@ describe.each`
   const wrapper = shallow(<TaskList { ...props } />);
 
   it('Expect tasks list', () => {
-    const tasksItems = wrapper.find('Task');
+    const tasksItems = wrapper.find('.TaskRow');
     expect(tasksItems)
       .toHaveLength(tasks.length);
     tasks.forEach((task, idx) => {
       const item = tasksItems.at(idx);
       expect(item.props())
-        .toEqual(task);
+        .toMatchObject({ task });
     });
   });
 

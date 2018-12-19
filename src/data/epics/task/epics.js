@@ -37,3 +37,18 @@ export function addItemFlow(action$, store, api) {
     catchError(pipe(asyncAction.failure, of)),
   );
 };
+
+export function editItemFlow(action$, store, api) {
+  const asyncAction = actions.editItem;
+  const editItem = async ({ payload }) => {
+    const result = await api.editItem(payload);
+
+    return asyncAction.success(result);
+  };
+
+  return action$.pipe(
+    ofType(CONSTANTS.EDIT.REQUEST),
+    switchMap(editItem),
+    catchError(pipe(asyncAction.failure, of)),
+  );
+};

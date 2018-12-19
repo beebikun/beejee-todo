@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './index.scss';
 
-import Task from 'components/Task';
+import TaskRow from 'containers/TaskRow';
 import SortingButton from 'containers/SortingButton';
 
 const TaskList = ({ tasks, isLogin }) => (
@@ -32,7 +32,7 @@ const TaskList = ({ tasks, isLogin }) => (
     </thead>
 
     <tbody>
-      { tasks.map((task, idx) => ( <Task key={idx} { ...task } /> )) }
+      { tasks.map((task, idx) => ( <TaskRow className="TaskRow" key={idx} task={ task } /> )) }
     </tbody>
   </table>
 );

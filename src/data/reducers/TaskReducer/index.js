@@ -8,6 +8,10 @@ export default function TaskReducer(state=initialState, action) {
       return action.payload.tasks;
     case CONSTANTS.ADD.SUCCESS:
       return [action.payload, ...state];
+    case CONSTANTS.EDIT.SUCCESS:
+      const idx = state.findIndex(({ id }) => id === action.payload.id);
+      if (idx < 0) return state;
+      return Object.assign([], state, { [ idx ]: action.payload });
     default:
       return state;
   }

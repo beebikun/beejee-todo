@@ -6,6 +6,7 @@ it('initial state', () => {
   expect(next).toHaveProperty('tasks');
   expect(next).toHaveProperty('page');
   expect(next).toHaveProperty('sort');
+  expect(next).toHaveProperty('editTaskId');
 });
 
 
