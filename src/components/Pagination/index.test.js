@@ -44,8 +44,8 @@ it('current less than max', () => {
 });
 
 
-it('current is 0', () => {
-  const page = { current: 0, max: 20 };
+it('current is 1', () => {
+  const page = { current: 1, max: 20 };
   const setCurrent = jest.fn();
   const { onPrev, onNext } = getItems(page, setCurrent);
 

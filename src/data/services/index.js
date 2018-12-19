@@ -45,10 +45,6 @@ class Api {
     form.append('text', text);
     form.append('image', image, image.name);
 
-    const params = {
-      developer: NAME,
-    };
-
     return axios
       .post(BASE_URL + 'create/', form, POST_CONFIG)
       .then(getData)

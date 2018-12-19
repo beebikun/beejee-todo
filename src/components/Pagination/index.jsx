@@ -14,7 +14,7 @@ class Pagination extends React.Component {
   render() {
     const { page, setCurrent } = this.props;
     const { max, current } = page;
-    const onPrev = current > 0 ? handlePrev : undefined;
+    const onPrev = current > 1 ? handlePrev : undefined;
     const onNext = current < max ? handleNext : undefined;
 
     return (
