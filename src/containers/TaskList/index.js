@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 
-import TaskList from './element';
+import TaskList from 'components/TaskList';
 
 
 function mapStateToProps(state) {
   return {
     tasks: state.tasks,
+    isLogin: state.auth.isLogin,
   };
 }
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import SortingButton from './element';
+import SortingButton from './index';
 
 it('isActive + asc', () => {
   const onSort = jest.fn();

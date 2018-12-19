@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import LoginForm from './element';
+import LoginForm from './index';
 
 
 it('Init state', () => {

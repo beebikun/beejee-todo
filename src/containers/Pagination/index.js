@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { actions } from 'data/actions/page';
-import Paginations from './element';
+import Pagination from 'components/Pagination';
 
 
 function mapStateToProps(state) {
@@ -17,4 +17,4 @@ function mapDispatchToProps(dispatch) {
 
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-export default connector(Paginations);
+export default connector(Pagination);

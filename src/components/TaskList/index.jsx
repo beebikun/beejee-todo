@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './element.scss';
+import './index.scss';
 
 import Task from 'components/Task';
 import SortingButton from 'containers/SortingButton';
 
-const TaskList = ({ tasks }) => (
+const TaskList = ({ tasks, isLogin }) => (
   <table className="pure-table TaskList">
     <thead>
         <tr>
@@ -27,6 +27,7 @@ const TaskList = ({ tasks }) => (
               <SortingButton sortKey="status" className="SortingButton" />
             </th>
             <th></th>
+            { isLogin ? <th></th> : null }
         </tr>
     </thead>
 
@@ -37,6 +38,7 @@ const TaskList = ({ tasks }) => (
 );
 
 TaskList.propTypes = {
+  isLogin: PropTypes.bool.isRequired,
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,

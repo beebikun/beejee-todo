@@ -23,13 +23,13 @@ function expectAsync({name, cname, payloads}) {
   });
 };
 
-const rowTask = { username: 'u', text: 't', email: 'email@e.com', image: 'i' };
-const task = { ...rowTask, id: 1 };
+const rawTask = { username: 'u', text: 't', email: 'email@e.com', image: 'i' };
+const task = { ...rawTask, id: 1 };
 const tasks = [ { id: 1 }, { id: 2 } ];
 
 describe.each`
   name            | cname      | payloads
   ${'fetchItems'} | ${'FETCH'} | ${ { SUCCESS: { tasks } } }
-  ${'addItem'}    | ${'ADD'}   | ${ { REQUEST: rowTask, SUCCESS: task } }
+  ${'addItem'}    | ${'ADD'}   | ${ { REQUEST: rawTask, SUCCESS: task } }
 `('$name', expectAsync);
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import TaskAdd from './element';
+import TaskAdd from './index';
 
 
 it('render without crashing', () => {

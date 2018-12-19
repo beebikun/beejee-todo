@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import PaginationButton from 'components/PaginationButton';
 
-import './element.scss';
+import './index.scss';
 
 
 class Pagination extends React.Component {

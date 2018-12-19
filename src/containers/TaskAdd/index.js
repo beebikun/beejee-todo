@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { actions } from 'data/actions/task';
-import TaskAdd from './element';
+import TaskAdd from 'components/TaskAdd';
 
 
 function mapDispatchToProps(dispatch) {

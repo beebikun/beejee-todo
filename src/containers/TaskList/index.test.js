@@ -4,7 +4,7 @@ import * as reactRedux from 'react-redux';
 const mockConnect = jest.spyOn(reactRedux, 'connect');
 mockConnect.mockReturnValue(() => jest.fn());
 
-jest.mock('./element', () => (<div></div>));
+jest.mock('components/TaskList', () => (<div></div>));
 
 it('Injected props', () => {
   const Connected = require('./index').default;
@@ -13,9 +13,12 @@ it('Injected props', () => {
 
   expect(mapStateToProps)
     .toBeInstanceOf(Function);
-  const state = { tasks: [ { id: 1 } ] };
+  const state = { tasks: [ { id: 1 } ], auth: { isLogin: true } };
   const stateProps = mapStateToProps(state);
-  expect(stateProps).toEqual({ tasks: state.tasks });
+  expect(stateProps).toEqual({
+    tasks: state.tasks,
+    isLogin: state.auth.isLogin,
+  });
 
   expect(mapDispatchToProps)
     .toBeUndefined();

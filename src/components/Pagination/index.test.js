@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import Pagination from './element';
+import Pagination from './index';
 
 function getItems(page, setCurrent) {
   const props = { page, setCurrent };

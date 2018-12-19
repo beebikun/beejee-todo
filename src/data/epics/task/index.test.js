@@ -60,10 +60,10 @@ describe('fetchItemsFlow', () => {
 
 
 describe('addItemFlow', () => {
-  const rowTask = { username: 'u', text: 't', email: 'email@e.com', image: 'i' };
-  const task = { ...rowTask, id: 1 };
+  const rawTask = { username: 'u', text: 't', email: 'email@e.com', image: 'i' };
+  const task = { ...rawTask, id: 1 };
   const asyncAction = actions.addItem;
-  const request = asyncAction.request(rowTask);
+  const request = asyncAction.request(rawTask);
 
   it('success', async (done) => {
     const result = task;
@@ -98,7 +98,7 @@ describe('addItemFlow', () => {
         expect(calledAction).toEqual(expectedAction);
 
         expect(API.addItem).toHaveBeenCalledTimes(1);
-        expect(API.addItem).toHaveBeenCalledWith(rowTask);
+        expect(API.addItem).toHaveBeenCalledWith(rawTask);
       });
   }
 });

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { actions } from 'data/actions/auth';
-import LoginForm from './element';
+import LoginForm from 'components/LoginForm';
 
 
 function mapStateToProps(state) {

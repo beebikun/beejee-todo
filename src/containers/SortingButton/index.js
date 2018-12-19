@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { actions } from 'data/actions/sort';
-import SortingButton from './element';
+import SortingButton from 'components/SortingButton';
 
 
 function mapStateToProps(state) {
