@@ -1,64 +1,82 @@
-const perPage = 3;
-const BASE_URL = '';
+import axios from 'axios';
+import md5 from 'js-md5';
+
+const PER_PAGE = 3;
+const BASE_URL = 'https://uxcandy.com/~shapoval/test-task-backend/';
+const NAME = 'beebikun';
+
+function getData({ data }) {
+  if (data.status === 'ok') {
+    return data.message;
+  } else {
+    return Promise.reject();
+  }
+}
+
+const POST_CONFIG = {
+  params: { developer: NAME },
+  crossDomain: true,
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'multipart/form-data',
+  },
+};
 
 class Api {
   fetchItems({ page, sortField, sortDirection }) {
-    const ids = [];
-    while(ids.length != 3) {
-      const id = Math.round(Math.random() * 100);
-      if (ids.includes(id) === false) {
-        ids.push(id);
-      }
-    }
-
-    const tasks = [
-      {
-        id: ids[0],
-        username: 'Finn',
-        email: 'finn.humat@at.com',
-        text: 'Save the princess',
-        status: 10,
-        image_path: 'https://goo.gl/61pq8a',
-      },
-      {
-        id: ids[1],
-        username: 'Dipper',
-        email: 'dipper.pines@gf.com',
-        text: 'Solve the secret',
-        status: 0,
-        image_path: 'https://goo.gl/TDDqFT',
-      },
-      {
-        id: ids[2],
-        username: 'Star',
-        email: 'star.butterfly@mewni.com',
-        text: 'Fight with the evil forces',
-        status: 10,
-        image_path: 'https://goo.gl/bGcFdD',
-      },
-    ];
-    const total = 10;
-    const pagesCount = Math.ceil(total / perPage);
-
-    return Promise.resolve({
-      tasks, total, pagesCount,
-    });
+    const params = {
+      page,
+      developer: NAME,
+      sort_field: sortField,
+      sort_direction: sortDirection,
+    };
+    return axios.get(BASE_URL, { params })
+      .then(getData)
+      .then(({ tasks, total_task_count }) => {
+        const pagesCount = Math.ceil(total_task_count / PER_PAGE);
+        return { tasks, pagesCount, total: total_task_count };
+      });
   }
 
   addItem({ username, email, text, image }) {
-    return Promise.resolve({
-      id: 3,
-      username,
-      email,
-      text,
-      status: 0,
-      image_path: 'https://goo.gl/VYdz95',
-    });
+    const form = new FormData();
+    form.append('username', username);
+    form.append('email', email);
+    form.append('text', text);
+    form.append('image', image, image.name);
+
+    const params = {
+      developer: NAME,
+    };
+
+    return axios
+      .post(BASE_URL + 'create/', form, POST_CONFIG)
+      .then(getData)
+      .then((task) => task);
   }
 
   editItem(task) {
-    // const { id,  }
-    return Promise.resolve(task);
+    const { id, text, status } = task;
+    const params = {
+      status, text,
+      token: 'beejee',
+    };
+    const query = Object.keys(params).reduce((s, key) => {
+      const value = encodeURIComponent(params[key]);
+      return s += `${key}=${value}&`;
+    }, '').slice(0, -1);  // cut the trailing `&`
+    const signature = md5(query);
+
+    const form = new FormData();
+    form.append('status', status);
+    form.append('text', text);
+    form.append('token', 'beejee');
+    form.append('signature', signature);
+
+    return axios
+      .post(BASE_URL + 'edit/' + id, form, POST_CONFIG)
+      .then(getData)
+      .then(() => task);
   }
 
 

@@ -8,7 +8,7 @@ import './index.scss';
 
 class Pagination extends React.Component {
   componentDidMount() {
-    this.props.setCurrent(0);
+    this.props.setCurrent(1);
   }
 
   render() {

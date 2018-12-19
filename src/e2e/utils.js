@@ -22,7 +22,7 @@ export async function fillForm(wrapper, formName, data) {
     const _name = formName + name
     const input = form.find(`[name="${ _name }"]`);
     const eventKey = name === 'image' ? 'files' : 'value';
-    const value = name === 'image' ? [ data[name] ] : data[name];
+    const value = name === 'image' ? [ new Blob(['image'], {type: 'image/png'}) ] : data[name];
     input.simulate('change', { target: { [ eventKey ]: value, name: _name } });
   });
 

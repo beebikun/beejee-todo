@@ -7,7 +7,7 @@ function getItems(page, setCurrent) {
   const props = { page, setCurrent };
   const wrapper = shallow(<Pagination {...props} />);
   expect(setCurrent)
-    .toHaveBeenCalledWith(0);
+    .toHaveBeenCalledWith(1);
 
   const items = wrapper.find('PaginationButton');
   expect(items)

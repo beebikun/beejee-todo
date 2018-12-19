@@ -32,7 +32,7 @@ it('CONSTANTS.ADD.SUCCESS: add item to the start', () => {
   const next = reducer(prev, { type: CONSTANTS.ADD.SUCCESS, payload });
 
   expect(next)
-    .toEqual([payload, ...prev]);
+    .toEqual([payload, prev[0], prev[1]]);
 });
 
 

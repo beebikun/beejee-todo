@@ -7,7 +7,7 @@ export default function TaskReducer(state=initialState, action) {
     case CONSTANTS.FETCH.SUCCESS:
       return action.payload.tasks;
     case CONSTANTS.ADD.SUCCESS:
-      return [action.payload, ...state];
+      return [action.payload, ...state].slice(0, 3);
     case CONSTANTS.EDIT.SUCCESS:
       const idx = state.findIndex(({ id }) => id === action.payload.id);
       if (idx < 0) return state;

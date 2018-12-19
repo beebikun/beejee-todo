@@ -9,6 +9,7 @@ it('Change page', async (done) => {
   nextButton.simulate('click');
 
   await skipTick();
+  await skipTick();
 
   const state = store.getState();
 

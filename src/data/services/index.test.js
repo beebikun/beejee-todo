@@ -1,56 +1,132 @@
+import axios, { tasks, total_task_count } from 'axios';
 import api from './index';
 
-it('fetch items', async (done) => {
-  const result = await api.fetchItems({});
+const task = tasks[0];
+const newTaskData = {
+  username: 'Finn',
+  email: 'finn.humat@at.com',
+  text: 'Save the princess',
+  image: new Blob(['image'], {type: 'image/png'}),
+};
 
-  const expected = {
-    tasks: expect.any(Array),
-    total: expect.any(Number),
-    pagesCount: expect.any(Number),
-  };
+const pagesCount = 4
 
-  expect(result)
-    .toEqual(expected);
+describe('Fetch items', () => {
+  const page = 10;
+  const sortField = 'username';
+  const sortDirection = 'asc';
 
-  done();
+  it('Test params', async (done) => {
+    await getResult({ status: 'ok', message: {} });
+
+    expect(axios.get)
+      .toBeCalledWith(expect.any(String),
+                      expect.objectContaining({
+        params: {
+          page,
+          developer: expect.any(String),
+          sort_field: sortField,
+          sort_direction: sortDirection,
+        },
+      }));
+
+    done();
+  });
+
+  it('Error', (done) => {
+    return getResult({ status: 'error' }).catch(() => {
+      done();
+    });
+  });
+
+  it('Success', async (done) => {
+    const result = await getResult({
+      status: 'ok',
+      message: {
+        tasks, total_task_count,
+      },
+    });
+
+    expect(result)
+      .toEqual({
+        tasks, pagesCount,
+        total: total_task_count,
+      });
+
+    done();
+  });
+
+
+  async function getResult(data) {
+    axios.get.mockClear();
+    axios.get.mockReturnValueOnce(Promise.resolve({ data }));
+
+    const result = await api.fetchItems({ page, sortField, sortDirection });
+
+    return result;
+  }
+
 });
 
-it('add item', async (done) => {
-  const item = {
-    username: 'username',
-    email: 'email',
-    text: 'text',
-    image: 'image',
-  };
-  const result = await api.addItem(item);
+describe('Add item', () => {
+  it('Success', async (done) => {
+    const result = await getResult({
+      status: 'ok',
+      message: task,
+    });
 
-  const expected = {
-    ...item,
-    image: undefined,
-    id: expect.any(Number),
-    image_path: expect.any(String),
-    status: 0,
-  };
+    expect(result)
+      .toEqual(task);
 
-  expect(result)
-    .toEqual(expected);
+    done();
+  });
 
-  done();
+  it('Error', (done) => {
+    return getResult({ status: 'error' }).catch(() => {
+      done();
+    });
+  });
+
+
+  async function getResult(data) {
+    axios.post.mockClear();
+    axios.post.mockReturnValueOnce(Promise.resolve({ data }));
+
+    const result = await api.addItem(newTaskData);
+
+    return result;
+  }
 });
 
-it('edit item', async (done) => {
-  const itemId = 1;
-  const item = {
-    status: 10,
-    text: 'edited text',
-  };
-  const result = await api.editItem(itemId, item);
+describe('Edit item', () => {
+  it('Success', async (done) => {
+    const result = await getResult({
+      status: 'ok',
+      message: {},
+    });
 
-  expect(result)
-    .toEqual({});
+    expect(result)
+      .toEqual(task);
 
-  done();
+    done();
+  });
+
+  it('Error', (done) => {
+    return getResult({ status: 'error' }).catch(() => {
+      done();
+    });
+  });
+
+  async function getResult(data) {
+    axios.post.mockClear();
+    axios.post.mockReturnValueOnce(Promise.resolve({ data }));
+
+    const result = await api.editItem(task);
+
+    return result;
+  }
 });
+
 
 
 describe('login', () => {

@@ -15,9 +15,11 @@ it('Initial state: fetch items afetr page onload', async (done) => {
   const expectedState = {
     tasks: expect.arrayContaining([expectedTask]),
     page: expect.objectContaining({
-      current: 0,
+      current: 1,
       max: expect.any(Number),
     }),
+    sort: { by: null, direction: null },
+    auth: { isLogin: false, isFailed: false },
   };
   expect(state)
     .toMatchObject(expectedState);

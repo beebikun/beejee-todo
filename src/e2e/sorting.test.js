@@ -14,6 +14,7 @@ it('Change sorting', async (done) => {
   sortButton.simulate('click');
 
   await skipTick();
+  await skipTick();
 
   const state = store.getState();
   expect(state.sort)
